@@ -14,10 +14,13 @@ ballrect = ball.get_rect()
 
 class View:
     def __init__(self, matrix):
-        self.pixels_per_m = 10
+        self.pixels_per_m = 20
+        right_menu_width = 180
+        bottom_menu_height = 160
 
-        screen_size = ( matrix.width * self.pixels_per_m, 
-                matrix.height * self.pixels_per_m)
+
+        screen_size = ( matrix.width * self.pixels_per_m + right_menu_width, 
+                matrix.height * self.pixels_per_m + bottom_menu_height)
 
         self.screen = pygame.display.set_mode(screen_size)
         self.matrix = matrix
@@ -41,12 +44,12 @@ class Matrix:
                 self.contents.append(None)
         
     def draw_background(self, screen, pixels_per_m):
-        for y, row in enumerate(self.contents):
-            for x, column in enumerate(self.contents):
-                rect = pygame.Rect(
-                        (x*pixels_per_m, y*pixels_per_m), 
-                        (pixels_per_m, pixels_per_m))
-                pygame.draw.rect(screen, 111, rect, 1)
+        for y in range(self.height):
+            pygame.draw.line(screen, 111, (0, y*pixels_per_m),
+                             (self.width*pixels_per_m, y*pixels_per_m), 1)
+        for x in range(self.width):
+            pygame.draw.line(screen, 111, (x*pixels_per_m, 0),
+                             (x*pixels_per_m, self.height*pixels_per_m), 1)
 
     def draw(self, screen, pixels_per_unit):
         pass
